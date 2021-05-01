@@ -2,7 +2,8 @@
 
 namespace ServicioAPISeguridad.Application.Interfaces
 {
-    public class Class1
+    public interface IUsuarioApplication
     {
+        void Prueba();
     }
 }

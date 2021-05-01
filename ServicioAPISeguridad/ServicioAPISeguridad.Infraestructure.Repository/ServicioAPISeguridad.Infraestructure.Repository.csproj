@@ -8,4 +8,8 @@
     <PackageReference Include="Dapper" Version="2.0.78" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ServicioAPISeguridad.Infraestructure.Configuration\ServicioAPISeguridad.Infraestructure.Configuration.csproj" />
+  </ItemGroup>
+
 </Project>

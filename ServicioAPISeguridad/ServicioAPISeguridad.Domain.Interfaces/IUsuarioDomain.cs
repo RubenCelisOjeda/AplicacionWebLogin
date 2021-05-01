@@ -2,7 +2,8 @@
 
 namespace ServicioAPISeguridad.Domain.Interfaces
 {
-    public class Class1
+    public interface IUsuarioDomain
     {
+        void Prueba();
     }
 }

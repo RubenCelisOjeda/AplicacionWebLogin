@@ -4,4 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ServicioAPISeguridad.Application.Interfaces\ServicioAPISeguridad.Application.Interfaces.csproj" />
+    <ProjectReference Include="..\ServicioAPISeguridad.Domain.Interfaces\ServicioAPISeguridad.Domain.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>

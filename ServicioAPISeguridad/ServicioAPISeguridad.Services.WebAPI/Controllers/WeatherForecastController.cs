@@ -34,6 +34,7 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
+           
         }
     }
 }

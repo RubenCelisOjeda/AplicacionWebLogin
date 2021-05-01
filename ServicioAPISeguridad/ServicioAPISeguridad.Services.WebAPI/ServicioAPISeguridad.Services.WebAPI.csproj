@@ -5,7 +5,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Config\" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.7.2" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.12.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.3" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.10.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ServicioAPISeguridad.Application.Dto\ServicioAPISeguridad.Application.Dto.csproj" />
+    <ProjectReference Include="..\ServicioAPISeguridad.Application.Interfaces\ServicioAPISeguridad.Application.Interfaces.csproj" />
+    <ProjectReference Include="..\ServicioAPISeguridad.Transversal.Common\ServicioAPISeguridad.Transversal.Common.csproj" />
+    <ProjectReference Include="..\ServicioAPISeguridad.Transversal.IoC\ServicioAPISeguridad.Transversal.IoC.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 

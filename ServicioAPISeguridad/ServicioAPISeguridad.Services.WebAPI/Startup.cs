@@ -6,6 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
+using NLog.Extensions.Logging;
+using ServicioAPISeguridad.Transversal.IoC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +29,26 @@ namespace ServicioAPISeguridad.Services.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            IoC.AddRegistration(services);
+
+            //añadir nlog
+            services.AddLogging(l =>
+            {
+                l.SetMinimumLevel(LogLevel.Information);
+                l.AddNLog("NLog.config");
+                
+            });
+
+            //añadir swagger
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "My API",
+                    Description = "ASP.NET Core Web API Core"
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +58,14 @@ namespace ServicioAPISeguridad.Services.WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //se añade la configuracion para swagger
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json","MyAPI");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseHttpsRedirection();
 
