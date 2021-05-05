@@ -1,6 +1,7 @@
-﻿using ServicioAPISeguridad.Domain.Interfaces;
+﻿using ServicioAPISeguridad.Domain.Entities.Usuario;
+using ServicioAPISeguridad.Domain.Interfaces;
 using ServicioAPISeguridad.Infraestructure.Interfaces;
-using System;
+using ServicioAPISeguridad.Transversal.Common;
 
 namespace ServicioAPISeguridad.Domain.Main
 {
@@ -12,6 +13,11 @@ namespace ServicioAPISeguridad.Domain.Main
         public UsuarioDomain(IUsuarioRepository usuarioRepository)
         {
             _usuarioRepository = usuarioRepository;
+        }
+
+        public UserResponseDto Login(string pUserName, string pPassword)
+        {
+            return _usuarioRepository.Login(pUserName, pPassword);
         }
 
         public void Prueba()

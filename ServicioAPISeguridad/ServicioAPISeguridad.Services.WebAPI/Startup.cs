@@ -40,6 +40,9 @@ namespace ServicioAPISeguridad.Services.WebAPI
                 
             });
 
+            //cors
+           
+
             //añadir swagger
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo

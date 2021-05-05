@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using ServicioAPISeguridad.Domain.Entities.Usuario;
 using ServicioAPISeguridad.Infraestructure.Interfaces;
+using ServicioAPISeguridad.Transversal.Common;
 using System.Data;
 using System.Linq;
 
@@ -16,16 +17,16 @@ namespace ServicioAPISeguridad.Infraestructure.Repository
             _configuration = configuration;
         }
 
-        public UserResponseDto Login(UserRequestDto pUsuario)
+        public UserResponseDto Login(string pUserName,string pPassword)
         {
             using (var connection = _configuration.GetConnectionSeguridad)
             {
-                var procedure = "";
+                const string procedure = "SPR_PROC_S_Login";
                 var parameters = new DynamicParameters();
-                parameters.Add("", pUsuario.Password,DbType.String);
-                parameters.Add("", pUsuario.Password, DbType.String);
+                parameters.Add("@pUserName", pUserName, DbType.String);
+                parameters.Add("@pPassword", pPassword, DbType.String);
 
-                return connection.Query<UserResponseDto>(procedure, parameters).FirstOrDefault();
+                return connection.Query<UserResponseDto>(procedure, parameters,commandType:CommandType.StoredProcedure).FirstOrDefault();
             }
         }
 

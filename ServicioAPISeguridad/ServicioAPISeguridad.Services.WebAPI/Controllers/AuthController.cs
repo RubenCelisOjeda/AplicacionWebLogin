@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using ServicioAPISeguridad.Application.Dto;
+using ServicioAPISeguridad.Application.Interfaces;
 using ServicioAPISeguridad.Services.WebAPI.Core;
 using ServicioAPISeguridad.Transversal.Common;
 
@@ -11,18 +11,18 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
     [ApiController]
     public class AuthController:Controller
     {
-        private readonly ILogger<AuthController> _logger;
         private readonly IConfiguration _configuration;
-        
-        public AuthController(ILogger<AuthController> logger, IConfiguration configuration)
+        private readonly IUsuarioApplication _usuarioApplication;
+
+        public AuthController(IConfiguration configuration, IUsuarioApplication usuarioApplication)
         {
-            _logger = logger;
             _configuration = configuration;
+            _usuarioApplication = usuarioApplication;
         }
 
-        [Route("GenerarToken")]
-        [HttpGet]
-        public IActionResult GenerarToken([FromBody] AuthRequest authRequest)
+        [Route("Login")]
+        [HttpPost]
+        public IActionResult Login([FromBody] AuthRequest authRequest)
         {
             //valida el modelo
             if (authRequest == null) return BadRequest();
@@ -40,10 +40,16 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
                 });
             }
 
-            //crea el token
-            var token = TokenGenerator.CreateToken(_configuration, authRequest.Username);
+            //valida el login
+            var response = _usuarioApplication.Login(authRequest.Username, authRequest.Password);
 
-            return RedirectToAction("Login", "Usuario",new { pPassword = authRequest.Password, pToken = token, pUserName = authRequest.Username });
+            if(response.IsSuccess)
+                response.Data.Token = TokenGenerator.CreateToken(_configuration, authRequest.Username);
+
+            //crea el token
+
+
+            return Ok(response);
         }
     }
 }

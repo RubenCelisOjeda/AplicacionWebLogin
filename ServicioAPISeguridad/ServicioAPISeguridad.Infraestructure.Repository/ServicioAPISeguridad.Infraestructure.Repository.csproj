@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ServicioAPISeguridad.Infraestructure.Configuration\ServicioAPISeguridad.Infraestructure.Configuration.csproj" />
+    <ProjectReference Include="..\ServicioAPISeguridad.Transversal.Common\ServicioAPISeguridad.Transversal.Common.csproj" />
   </ItemGroup>
 
 </Project>

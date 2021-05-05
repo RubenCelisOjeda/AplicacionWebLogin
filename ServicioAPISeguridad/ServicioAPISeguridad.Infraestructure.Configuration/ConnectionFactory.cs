@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using ServicioAPISeguridad.Infraestructure.Interfaces;
 using System;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 
 namespace ServicioAPISeguridad.Infraestructure.Configuration
@@ -11,7 +12,6 @@ namespace ServicioAPISeguridad.Infraestructure.Configuration
     {
         private readonly IConfiguration _configuration;
         private readonly ILogger<ConnectionFactory> _logger;
-        private SqlConnection connection = null;
 
         public ConnectionFactory(IConfiguration configuration, ILogger<ConnectionFactory> logger)
         {
@@ -19,25 +19,22 @@ namespace ServicioAPISeguridad.Infraestructure.Configuration
             _logger = logger;
         }
 
+
         public IDbConnection GetConnectionSeguridad
         {
-            get
-            {
-                try
-                {
-                    using (connection = new SqlConnection())
-                    {
-                        if (connection == null) return null;
-                        connection.ConnectionString = _configuration.GetConnectionString("BDSeguridad");
-                        connection.Open();
-                    }
-                }
-                catch (Exception e)
-                {
-                    _logger.LogError(e,e.Message);
-                }
-                return connection;
-            }
+            get { return GetConnection(_configuration.GetConnectionString("BDSeguridad"));}
+        }
+
+        public DbConnection GetConnection(string pDataBase)
+        {
+            var connection = new SqlConnection();
+
+            if (connection == null) return null;
+
+            connection.ConnectionString = pDataBase;
+            connection.Open();
+
+            return connection;
         }
 
         public IDbConnection GetConnectionVenta

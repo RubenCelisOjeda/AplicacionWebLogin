@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ServicioAPISeguridad.Domain.Entities\ServicioAPISeguridad.Domain.Entities.csproj" />
+    <ProjectReference Include="..\ServicioAPISeguridad.Transversal.Common\ServicioAPISeguridad.Transversal.Common.csproj" />
   </ItemGroup>
 
 </Project>
