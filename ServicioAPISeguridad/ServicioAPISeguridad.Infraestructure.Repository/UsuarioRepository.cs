@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using ServicioAPISeguridad.Domain.Entities.Usuario;
 using ServicioAPISeguridad.Infraestructure.Interfaces;
-using ServicioAPISeguridad.Transversal.Common;
 using System.Data;
 using System.Linq;
 

@@ -47,8 +47,6 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
                 response.Data.Token = TokenGenerator.CreateToken(_configuration, authRequest.Username);
 
             //crea el token
-
-
             return Ok(response);
         }
     }
