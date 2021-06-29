@@ -1,6 +1,5 @@
 ﻿using ServicioAPISeguridad.Domain.Entities.Usuario;
 using ServicioAPISeguridad.Transversal.Common;
-using System;
 
 namespace ServicioAPISeguridad.Application.Interfaces
 {
@@ -8,5 +7,6 @@ namespace ServicioAPISeguridad.Application.Interfaces
     {
         Response<UserResponseDto> Login(string pUserName, string pPassword);
         void Prueba();
+        Response<UserRegisterDto> UserRegister(UserRegisterDto pUserRegisterDto);
     }
 }

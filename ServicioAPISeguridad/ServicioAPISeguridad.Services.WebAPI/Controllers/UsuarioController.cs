@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ServicioAPISeguridad.Application.Dto;
 using ServicioAPISeguridad.Application.Interfaces;
+using ServicioAPISeguridad.Domain.Entities.Usuario;
+using ServicioAPISeguridad.Transversal.Common;
+using System;
 
 namespace ServicioAPISeguridad.Services.WebAPI.Controllers
 {
@@ -18,28 +20,35 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
             _usuarioApplication = usuarioApplication;
         }
 
-        [Route("Prueba")]
+   
         [HttpPost]
-        public IActionResult Login([FromBody] AuthRequest authRequest)
+        [Route("registerUser")]
+        public IActionResult RegisterUser([FromBody] UserRegisterDto pUserRegister)
         {
+            //valida el modelo
+            if (pUserRegister == null) return BadRequest();
+
             //valida los datos
-            //if (string.IsNullOrEmpty(pUserName) || string.IsNullOrEmpty(pPassword))
-            //{
-            //    return Ok(new Response<AuthResponse>
-            //    {
-            //        Data = null,
-            //        CodigoError = Constantes.Error002,
-            //        IsSuccess = true,
-            //        IsWarning = true,
-            //        Message = "Contraseña inválida y/o incorrecta",
-            //    });
-            //}
+            if (string.IsNullOrEmpty(pUserRegister.Email) || 
+                string.IsNullOrEmpty(pUserRegister.Password) ||
+                string.IsNullOrEmpty(pUserRegister.UserName) )
+            {
+                return Ok(new
+                {
+                    CodigoError = Constantes.Error002,
+                    IsSuccess = true,
+                    IsWarning = true,
+                    Message = "Contraseña inválida y/o incorrecta",
+                });
+            }
+
+            pUserRegister.Status = 1;
+            pUserRegister.DateCreate = DateTime.Now;
 
             //valida la autenticacion
+            var response =  _usuarioApplication.UserRegister(pUserRegister);
 
-             _usuarioApplication.Prueba();
-
-            return Ok("");
+            return Ok(response);
         }
     }
 }

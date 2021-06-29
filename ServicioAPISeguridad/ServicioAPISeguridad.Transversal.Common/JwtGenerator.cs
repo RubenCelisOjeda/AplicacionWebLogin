@@ -5,16 +5,15 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace ServicioAPISeguridad.Services.WebAPI.Core
+namespace ServicioAPISeguridad.Transversal.Common
 {
-    public  static class TokenGenerator
+    public static class JwtGenerator
     {
-
         /// <summary>
         /// Metodo que genera un jwt para su respectiva sesion.
         /// </summary>
         /// <returns></returns>
-        public static string CreateToken(IConfiguration _configuration,string pUsername)
+        public static string CreateToken(IConfiguration _configuration, string pUsername)
         {
             //get the  configuration appseting.json
             var key = _configuration["Jwt:Key"];

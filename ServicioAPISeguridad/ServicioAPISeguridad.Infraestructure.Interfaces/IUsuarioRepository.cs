@@ -1,5 +1,5 @@
-﻿using ServicioAPISeguridad.Domain.Entities.Usuario;
-using ServicioAPISeguridad.Transversal.Common;
+﻿using ServicioAPISeguridad.Domain.Entities.Sesion;
+using ServicioAPISeguridad.Domain.Entities.Usuario;
 
 namespace ServicioAPISeguridad.Infraestructure.Interfaces
 {
@@ -7,5 +7,7 @@ namespace ServicioAPISeguridad.Infraestructure.Interfaces
     {
         void Prueba();
         UserResponseDto Login (string pUserName, string pPassword);
+        void GuardarSesion(SesionUsuarioDto pSesionUsuarioDto);
+        void UserRegister(UserRegisterDto pUserRegisterDto);
     }
 }

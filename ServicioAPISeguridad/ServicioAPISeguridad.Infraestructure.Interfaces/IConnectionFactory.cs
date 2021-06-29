@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Text;
+﻿using System.Data;
 
 namespace ServicioAPISeguridad.Infraestructure.Interfaces
 {
@@ -9,6 +6,6 @@ namespace ServicioAPISeguridad.Infraestructure.Interfaces
     {
         IDbConnection GetConnectionSeguridad { get; }
 
-        IDbConnection GetConnectionVenta { get; }
+        IDbConnection GetConnectionSCM { get; }
     }
 }

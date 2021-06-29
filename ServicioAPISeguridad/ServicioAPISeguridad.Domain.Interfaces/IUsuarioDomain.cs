@@ -1,4 +1,5 @@
-﻿using ServicioAPISeguridad.Domain.Entities.Usuario;
+﻿using ServicioAPISeguridad.Domain.Entities.Sesion;
+using ServicioAPISeguridad.Domain.Entities.Usuario;
 
 namespace ServicioAPISeguridad.Domain.Interfaces
 {
@@ -7,5 +8,9 @@ namespace ServicioAPISeguridad.Domain.Interfaces
         UserResponseDto Login(string pUserName, string pPassword);
 
         void Prueba();
+
+        void GuardarSesion(SesionUsuarioDto pSesionUsuario);
+
+        void UserRegister(UserRegisterDto pUserRegisterDto);
     }
 }

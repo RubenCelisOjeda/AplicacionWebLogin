@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using ServicioAPISeguridad.Application.Dto;
 using ServicioAPISeguridad.Application.Interfaces;
-using ServicioAPISeguridad.Services.WebAPI.Core;
 using ServicioAPISeguridad.Transversal.Common;
 
 namespace ServicioAPISeguridad.Services.WebAPI.Controllers
@@ -20,19 +19,19 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
             _usuarioApplication = usuarioApplication;
         }
 
-        [Route("Login")]
         [HttpPost]
-        public IActionResult Login([FromBody] AuthRequest authRequest)
+        [Route("login")]
+        public IActionResult Login([FromBody] AuthRequest pUthRequest)
         {
             //valida el modelo
-            if (authRequest == null) return BadRequest();
+            if (pUthRequest == null) return BadRequest();
 
             //valida los datos
-            if (string.IsNullOrEmpty(authRequest.Username) || string.IsNullOrEmpty(authRequest.Password))
+            if (string.IsNullOrEmpty(pUthRequest.Username) || 
+                string.IsNullOrEmpty(pUthRequest.Password))
             {
-                return Ok(new Response<AuthResponse>
+                return Ok(new 
                 {
-                    Data = null,
                     CodigoError = Constantes.Error001,
                     IsSuccess = true,
                     IsWarning = true,
@@ -41,10 +40,7 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
             }
 
             //valida el login
-            var response = _usuarioApplication.Login(authRequest.Username, authRequest.Password);
-
-            if(response.IsSuccess)
-                response.Data.Token = TokenGenerator.CreateToken(_configuration, authRequest.Username);
+            var response = _usuarioApplication.Login(pUthRequest.Username, pUthRequest.Password);
 
             //crea el token
             return Ok(response);

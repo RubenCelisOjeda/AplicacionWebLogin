@@ -25,6 +25,11 @@ namespace ServicioAPISeguridad.Infraestructure.Configuration
             get { return GetConnection(_configuration.GetConnectionString("BDSeguridad"));}
         }
 
+        public IDbConnection GetConnectionSCM
+        {
+            get { return GetConnection(_configuration.GetConnectionString("BDSCM")); }
+        }
+
         public DbConnection GetConnection(string pDataBase)
         {
             var connection = new SqlConnection();
