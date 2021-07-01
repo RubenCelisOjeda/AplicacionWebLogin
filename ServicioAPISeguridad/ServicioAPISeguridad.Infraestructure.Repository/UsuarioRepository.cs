@@ -38,7 +38,7 @@ namespace ServicioAPISeguridad.Infraestructure.Repository
             {
                 const string procedure = "PROC_S_Login";
                 var parameters = new DynamicParameters();
-                parameters.Add("@pUserName", pUserName, DbType.String);
+                parameters.Add("@pEmail", pUserName, DbType.String);
                 parameters.Add("@pPassword", pPassword, DbType.String);
 
                 return connection.Query<UserResponseDto>(procedure, parameters,commandType:CommandType.StoredProcedure).FirstOrDefault();
@@ -55,7 +55,7 @@ namespace ServicioAPISeguridad.Infraestructure.Repository
 
         public void UserRegister(UserRegisterDto pUserRegisterDto)
         {
-            using (var connection = _configuration.GetConnectionSCM)
+            using (var connection = _configuration.GetConnectionSeguridad)
             {
                 const string procedure = "PROC_I_Usuario";
                 var parameters = new DynamicParameters();

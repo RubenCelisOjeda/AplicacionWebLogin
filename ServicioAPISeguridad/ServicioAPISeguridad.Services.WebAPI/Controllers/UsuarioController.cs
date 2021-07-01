@@ -36,9 +36,9 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
                 return Ok(new
                 {
                     CodigoError = Constantes.Error002,
-                    IsSuccess = true,
+                    IsSuccess = false,
                     IsWarning = true,
-                    Message = "Contraseña inválida y/o incorrecta",
+                    Message = "No se pudo realizar el registro,intente denuevo.",
                 });
             }
 

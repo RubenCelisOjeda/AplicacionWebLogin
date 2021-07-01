@@ -33,7 +33,7 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
                 return Ok(new 
                 {
                     CodigoError = Constantes.Error001,
-                    IsSuccess = true,
+                    IsSuccess = false,
                     IsWarning = true,
                     Message = "Error: No se puede acceder al servicio de seguridad.",
                 });

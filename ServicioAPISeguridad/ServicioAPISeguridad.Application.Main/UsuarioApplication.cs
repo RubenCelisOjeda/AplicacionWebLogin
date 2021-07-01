@@ -38,29 +38,31 @@ namespace ServicioAPISeguridad.Application.Main
                     response.IsSuccess = false;
                     response.IsWarning = true;
                     response.CodigoError = "0";
+                    response.Message = "Usuario y/o contraseña incorrecta.";
                     return response;
                 }
-
-                if (response.IsSuccess)
-                    response.Data.Token = JwtGenerator.CreateToken(_configuration, 
-                                                                   response.Data.UserName);
-
-                //guardar sesion de usuario
-                var sesion = new SesionUsuarioDto
+                else
                 {
-                    IdUser = response.Data.Id,
-                    Token = response.Data.Token,
-                    DateStart = DateTime.Now,
-                    Status = 1
-                };
-                _usuarioDomain.GuardarSesion(sesion);
+                    response.Data.Token = JwtGenerator.CreateToken(_configuration,
+                                                                   response.Data.UserName);
+                    response.Message = "Inicio de sesión correctamente.";
 
+                    //guardar sesion de usuario
+                    var sesion = new SesionUsuarioDto
+                    {
+                        IdUser = response.Data.Id,
+                        Token = response.Data.Token,
+                        DateStart = DateTime.Now,
+                        Status = 1
+                    };
+                    _usuarioDomain.GuardarSesion(sesion);
+                }
             }
             catch (Exception ex)
             {
                 response.IsWarning = true;
                 response.IsSuccess = false;
-                response.Message = "Error";
+                response.Message = "Error no se pudo iniciar sesión,intente de nuevo.";
                 _logger.LogError(ex,ex.Message);
             }
             return response;
