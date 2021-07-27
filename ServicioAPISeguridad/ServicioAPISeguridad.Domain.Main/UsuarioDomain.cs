@@ -2,7 +2,6 @@
 using ServicioAPISeguridad.Domain.Entities.Usuario;
 using ServicioAPISeguridad.Domain.Interfaces;
 using ServicioAPISeguridad.Infraestructure.Interfaces;
-using ServicioAPISeguridad.Transversal.Common;
 
 namespace ServicioAPISeguridad.Domain.Main
 {
@@ -26,14 +25,19 @@ namespace ServicioAPISeguridad.Domain.Main
             return _usuarioRepository.Login(pUserName, pPassword);
         }
 
-        public void Prueba()
-        {
-            _usuarioRepository.Prueba();
-        }
-
         public void UserRegister(UserRegisterDto pUserRegisterDto)
         {
             _usuarioRepository.UserRegister(pUserRegisterDto);
+        }
+ 
+        public bool ValidateByUser(string pUser)
+        {
+            return _usuarioRepository.ValidateByUser(pUser);
+        }
+
+        public bool ValidateByEmail(string pEmail)
+        {
+            return _usuarioRepository.ValidateByEmail(pEmail);
         }
     }
 }

@@ -31,34 +31,8 @@ namespace ServicioAPISeguridad.Infraestructure.Configuration
             get { return GetConnection(_configuration.GetConnectionString("BDSCM")); }
         }
 
-
-        public void Prueba()
-        {
-            int conta = 0;
-            var configurations = _configuration.GetSection("ConnectionStrings:SqlServer").GetChildren();
-
-            string providerName = "";
-            string connectionString = "";
-
-
-            if (configurations != null)
-            {
-                foreach (var item in configurations)
-                {
-                    conta++;
-
-                    if (conta == 1) connectionString = item.Value;
-                    else providerName = item.Value;
-                }
-            }
-
-        }
-
         public IDbConnection GetConnection(string pDataBase)
         {
-
-            this.Prueba();
-
             var connection = new SqlConnection();
 
             if (connection == null) return null;

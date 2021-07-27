@@ -45,14 +45,6 @@ namespace ServicioAPISeguridad.Infraestructure.Repository
             }
         }
 
-        public void Prueba()
-        {
-            using (var connection = _configuration?.GetConnectionSeguridad)
-            {
-
-            }
-        }
-
         public void UserRegister(UserRegisterDto pUserRegisterDto)
         {
             using (var connection = _configuration.GetConnectionSeguridad)
@@ -66,6 +58,34 @@ namespace ServicioAPISeguridad.Infraestructure.Repository
                 parameters.Add("@pStatus", pUserRegisterDto.Status, DbType.Byte);
 
                 connection.Execute(procedure, parameters, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public bool ValidateByUser(string pUser)
+        {
+            using (var connection = _configuration.GetConnectionSeguridad)
+            {
+                const string query = @"SELECT 1 
+                                       FROM Usuario
+                                       WHERE UserName = @pUserName";
+                var parameters = new DynamicParameters();
+                parameters.Add("@pUserName", pUser, DbType.String);
+
+                return connection.Query<bool>(query, parameters, commandType: CommandType.Text).Any();
+            }
+        }
+
+        public bool ValidateByEmail(string pEmail)
+        {
+            using (var connection = _configuration.GetConnectionSeguridad)
+            {
+                const string query = @"SELECT 1 
+                                       FROM Usuario
+                                       WHERE Email = @pEmail";
+                var parameters = new DynamicParameters();
+                parameters.Add("@pEmail", pEmail, DbType.String);
+
+                return connection.Query<bool>(query, parameters, commandType: CommandType.Text).Any();
             }
         }
     }

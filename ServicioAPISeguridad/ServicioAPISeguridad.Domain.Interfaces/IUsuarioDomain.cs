@@ -6,11 +6,9 @@ namespace ServicioAPISeguridad.Domain.Interfaces
     public interface IUsuarioDomain
     {
         UserResponseDto Login(string pUserName, string pPassword);
-
-        void Prueba();
-
         void GuardarSesion(SesionUsuarioDto pSesionUsuario);
-
         void UserRegister(UserRegisterDto pUserRegisterDto);
+        bool ValidateByUser(string pUser);
+        bool ValidateByEmail(string pEmail);
     }
 }

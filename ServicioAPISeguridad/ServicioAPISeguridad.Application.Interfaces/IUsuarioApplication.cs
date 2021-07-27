@@ -6,7 +6,8 @@ namespace ServicioAPISeguridad.Application.Interfaces
     public interface IUsuarioApplication
     {
         Response<UserResponseDto> Login(string pUserName, string pPassword);
-        void Prueba();
+        Response<bool> ValidateByUser(string pUser);
         Response<UserRegisterDto> UserRegister(UserRegisterDto pUserRegisterDto);
+        Response<bool> ValidateByEmail(string pEmail);
     }
 }

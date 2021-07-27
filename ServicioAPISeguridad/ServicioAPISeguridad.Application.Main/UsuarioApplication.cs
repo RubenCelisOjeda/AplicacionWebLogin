@@ -82,6 +82,7 @@ namespace ServicioAPISeguridad.Application.Main
                     response.IsSuccess = false;
                     response.IsWarning = true;
                     response.CodigoError = "0";
+                    response.Message = "Registro no válido,intente de nuevo.";
                     return response;
                 }
 
@@ -100,9 +101,74 @@ namespace ServicioAPISeguridad.Application.Main
             return response;
         }
 
-        public void Prueba()
+        public Response<bool> ValidateByUser(string pUser)
         {
-            _usuarioDomain.Prueba();
+            var response = new Response<bool>();
+            response.IsWarning = false;
+            response.IsSuccess = true;
+            response.CodigoError = "0";
+            response.Data = false;
+
+            try
+            {
+                var responseExists = _usuarioDomain.ValidateByUser(pUser);
+
+                if (responseExists)
+                {
+                    response.IsWarning = true;
+                    response.Data = responseExists;
+                    response.Message = "Usuario ingresado ya existe, ingrese otro.";
+                }
+                else
+                {
+                    response.Data = responseExists;
+                    response.Message = "Usuario ingresado correctamente";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsWarning = true;
+                response.IsSuccess = false;
+                response.Message = "Error";
+                _logger.LogError(ex, ex.Message);
+            }
+            return response;
         }
+
+
+        public Response<bool> ValidateByEmail(string pEmail)
+        {
+            var response = new Response<bool>();
+            response.IsWarning = false;
+            response.IsSuccess = true;
+            response.CodigoError = "0";
+            response.Data = false;
+
+            try
+            {
+                var responseExists = _usuarioDomain.ValidateByEmail(pEmail);
+
+                if (responseExists)
+                {
+                    response.IsWarning = true;
+                    response.Data = responseExists;
+                    response.Message = "Email ingresado ya existe, ingrese otro.";
+                }
+                else
+                {
+                    response.Data = responseExists;
+                    response.Message = "Email ingresado correctamente";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsWarning = true;
+                response.IsSuccess = false;
+                response.Message = "Error";
+                _logger.LogError(ex, ex.Message);
+            }
+            return response;
+        }
+
     }
 }

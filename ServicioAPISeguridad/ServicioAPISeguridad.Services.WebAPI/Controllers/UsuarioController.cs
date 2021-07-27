@@ -7,7 +7,7 @@ using System;
 
 namespace ServicioAPISeguridad.Services.WebAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
 
@@ -19,8 +19,7 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
         {
             _usuarioApplication = usuarioApplication;
         }
-
-   
+ 
         [HttpPost]
         [Route("registerUser")]
         public IActionResult RegisterUser([FromBody] UserRegisterDto pUserRegister)
@@ -45,8 +44,56 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
             pUserRegister.Status = 1;
             pUserRegister.DateCreate = DateTime.Now;
 
-            //valida la autenticacion
+
             var response =  _usuarioApplication.UserRegister(pUserRegister);
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("validateByUser/{pUser}")]
+        public IActionResult ValidateByUser(string pUser)
+        {
+            //valida el modelo
+            if (pUser == null) return BadRequest();
+
+            //valida los datos
+            if (string.IsNullOrEmpty(pUser))
+            {
+                return Ok(new
+                {
+                    CodigoError = Constantes.Error002,
+                    IsSuccess = false,
+                    IsWarning = true,
+                    Message = "No se pudo realizar el registro,intente denuevo.",
+                });
+            }
+
+            var response = _usuarioApplication.ValidateByUser(pUser);
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("validateByEmail/{pEmail}")]
+        public IActionResult ValidateByEmail(string pEmail)
+        {
+            //valida el modelo
+            if (pEmail == null) return BadRequest();
+
+            //valida los datos
+            if (string.IsNullOrEmpty(pEmail))
+            {
+                return Ok(new
+                {
+                    CodigoError = Constantes.Error002,
+                    IsSuccess = false,
+                    IsWarning = true,
+                    Message = "No se pudo realizar el registro,intente denuevo.",
+                });
+            }
+
+            var response = _usuarioApplication.ValidateByEmail(pEmail);
 
             return Ok(response);
         }
