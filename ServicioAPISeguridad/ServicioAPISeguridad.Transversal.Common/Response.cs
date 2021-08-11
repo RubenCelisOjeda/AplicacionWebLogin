@@ -5,6 +5,9 @@
         public Response()
         {
             this.Message = "";
+            this.IsSuccess = true;
+            this.IsWarning = false;
+            this.CodigoError = "0";
         }
 
         public string CodigoError { get; set; }

@@ -1,4 +1,6 @@
-﻿using ServicioAPISeguridad.Domain.Entities.Sesion;
+﻿using ServicioAPISeguridad.Application.Dto;
+using ServicioAPISeguridad.Domain.Entities.Auth;
+using ServicioAPISeguridad.Domain.Entities.Sesion;
 using ServicioAPISeguridad.Domain.Entities.Usuario;
 using ServicioAPISeguridad.Domain.Interfaces;
 using ServicioAPISeguridad.Infraestructure.Interfaces;
@@ -15,14 +17,14 @@ namespace ServicioAPISeguridad.Domain.Main
             _usuarioRepository = usuarioRepository;
         }
 
-        public void GuardarSesion(SesionUsuarioDto pSesionUsuario)
+        public void GuardarSesion(SesionUsuarioEntities pSesionUsuario)
         {
             _usuarioRepository.GuardarSesion(pSesionUsuario);
         }
 
-        public UserResponseDto Login(string pUserName, string pPassword)
+        public UserResponseEntities Login(AuthRequestEntities authRequestEntities)
         {
-            return _usuarioRepository.Login(pUserName, pPassword);
+            return _usuarioRepository.Login(authRequestEntities);
         }
 
         public void UserRegister(UserRegisterDto pUserRegisterDto)

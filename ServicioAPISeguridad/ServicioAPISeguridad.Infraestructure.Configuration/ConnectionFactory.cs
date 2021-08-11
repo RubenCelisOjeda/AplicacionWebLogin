@@ -1,10 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using ServicioAPISeguridad.Domain.Entities;
 using ServicioAPISeguridad.Infraestructure.Interfaces;
-using System;
 using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
 
 namespace ServicioAPISeguridad.Infraestructure.Configuration
@@ -41,16 +38,6 @@ namespace ServicioAPISeguridad.Infraestructure.Configuration
             connection.Open();
 
             return connection;
-        }
-
-
-
-        public IDbConnection GetConnectionVenta
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
         }
     }
 }

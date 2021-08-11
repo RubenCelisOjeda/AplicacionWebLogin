@@ -1,8 +1,7 @@
-﻿namespace ServicioAPISeguridad.Application.Dto
+﻿namespace ServicioAPISeguridad.Domain.Entities.Auth.Response
 {
-    public class LoginRequest
+    public class AuthResponseEntities
     {
-        public int IdUser { get; set; }
         public string Password { get; set; }
         public string Token { get; set; }
         public string Username { get; set; }

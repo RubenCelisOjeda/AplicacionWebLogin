@@ -1,6 +1,6 @@
 ﻿namespace ServicioAPISeguridad.Application.Dto
 {
-    public class UserRegister
+    public class UserRegisterDto
     {
         public string Usuario { get; set; }
         public string Email { get; set; }

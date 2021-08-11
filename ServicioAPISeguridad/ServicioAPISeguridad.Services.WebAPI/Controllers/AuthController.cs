@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using ServicioAPISeguridad.Application.Dto;
 using ServicioAPISeguridad.Application.Interfaces;
 using ServicioAPISeguridad.Transversal.Common;
@@ -10,18 +9,16 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
     [ApiController]
     public class AuthController:Controller
     {
-        private readonly IConfiguration _configuration;
         private readonly IUsuarioApplication _usuarioApplication;
 
-        public AuthController(IConfiguration configuration, IUsuarioApplication usuarioApplication)
+        public AuthController(IUsuarioApplication usuarioApplication)
         {
-            _configuration = configuration;
             _usuarioApplication = usuarioApplication;
         }
 
         [HttpPost]
         [Route("login")]
-        public IActionResult Login([FromBody] AuthRequest pUthRequest)
+        public IActionResult Login([FromBody] AuthRequestDto pUthRequest)
         {
             //valida el modelo
             if (pUthRequest == null) return BadRequest();

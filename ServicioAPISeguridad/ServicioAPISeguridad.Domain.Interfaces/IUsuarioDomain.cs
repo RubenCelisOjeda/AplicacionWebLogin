@@ -1,12 +1,14 @@
-﻿using ServicioAPISeguridad.Domain.Entities.Sesion;
+﻿using ServicioAPISeguridad.Application.Dto;
+using ServicioAPISeguridad.Domain.Entities.Auth;
+using ServicioAPISeguridad.Domain.Entities.Sesion;
 using ServicioAPISeguridad.Domain.Entities.Usuario;
 
 namespace ServicioAPISeguridad.Domain.Interfaces
 {
     public interface IUsuarioDomain
     {
-        UserResponseDto Login(string pUserName, string pPassword);
-        void GuardarSesion(SesionUsuarioDto pSesionUsuario);
+        UserResponseEntities Login(AuthRequestEntities authRequestEntities);
+        void GuardarSesion(SesionUsuarioEntities pSesionUsuario);
         void UserRegister(UserRegisterDto pUserRegisterDto);
         bool ValidateByUser(string pUser);
         bool ValidateByEmail(string pEmail);

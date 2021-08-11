@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using ServicioAPISeguridad.Domain.Entities.Auth;
 using ServicioAPISeguridad.Domain.Entities.Sesion;
 using ServicioAPISeguridad.Domain.Entities.Usuario;
 using ServicioAPISeguridad.Infraestructure.Interfaces;
@@ -17,7 +18,7 @@ namespace ServicioAPISeguridad.Infraestructure.Repository
             _configuration = configuration;
         }
 
-        public void GuardarSesion(SesionUsuarioDto pSesionUsuario)
+        public void GuardarSesion(SesionUsuarioEntities pSesionUsuario)
         {
             using (var connection = _configuration.GetConnectionSeguridad)
             {
@@ -32,16 +33,16 @@ namespace ServicioAPISeguridad.Infraestructure.Repository
             }
         }
 
-        public UserResponseDto Login(string pUserName,string pPassword)
+        public UserResponseEntities Login(AuthRequestEntities authRequestEntities)
         {
             using (var connection = _configuration.GetConnectionSeguridad)
             {
                 const string procedure = "PROC_S_Login";
                 var parameters = new DynamicParameters();
-                parameters.Add("@pEmail", pUserName, DbType.String);
-                parameters.Add("@pPassword", pPassword, DbType.String);
+                parameters.Add("@pEmail", authRequestEntities.Username, DbType.String);
+                parameters.Add("@pPassword", authRequestEntities.Password, DbType.String);
 
-                return connection.Query<UserResponseDto>(procedure, parameters,commandType:CommandType.StoredProcedure).FirstOrDefault();
+                return connection.Query<UserResponseEntities>(procedure, parameters,commandType:CommandType.StoredProcedure).FirstOrDefault();
             }
         }
 

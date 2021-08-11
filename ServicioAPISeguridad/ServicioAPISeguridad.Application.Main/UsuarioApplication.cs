@@ -1,6 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using AutoMapper;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using ServicioAPISeguridad.Application.Dto;
+using ServicioAPISeguridad.Application.Dto.Sesion.Request;
 using ServicioAPISeguridad.Application.Interfaces;
+using ServicioAPISeguridad.Domain.Entities.Auth;
 using ServicioAPISeguridad.Domain.Entities.Sesion;
 using ServicioAPISeguridad.Domain.Entities.Usuario;
 using ServicioAPISeguridad.Domain.Interfaces;
@@ -14,24 +18,25 @@ namespace ServicioAPISeguridad.Application.Main
         private readonly ILogger<UsuarioApplication> _logger;
         private readonly IConfiguration _configuration;
         private readonly IUsuarioDomain _usuarioDomain;
+        private readonly IMapper _mapper;
 
-        public UsuarioApplication(ILogger<UsuarioApplication> logger,IUsuarioDomain usuarioDomain,IConfiguration configuration)
+        public UsuarioApplication(ILogger<UsuarioApplication> logger, IMapper mapper, IUsuarioDomain usuarioDomain,IConfiguration configuration)
         {
             _usuarioDomain = usuarioDomain;
+            _mapper = mapper;
             _logger = logger;
             _configuration = configuration;
         }
 
-        public Response<UserResponseDto> Login(string pUserName, string pPassword)
+        public Response<AuthResponseDto> Login(AuthRequestDto authRequestDto)
         {
-            var response = new Response<UserResponseDto>();
-            response.IsSuccess = true;
-            response.CodigoError = "0";
+            AuthRequestEntities authRequest = _mapper.Map<AuthRequestEntities>(authRequestDto);
+            var response = new Response<AuthResponseDto>();
 
             try
             {
                 //valida el usuario y password
-                response.Data = _usuarioDomain.Login(pUserName, pPassword);
+                response.Data = _mapper.Map<AuthResponseDto>(_usuarioDomain.Login(authRequest));
 
                 if (response.Data == null)
                 {
@@ -55,7 +60,8 @@ namespace ServicioAPISeguridad.Application.Main
                         DateStart = DateTime.Now,
                         Status = 1
                     };
-                    _usuarioDomain.GuardarSesion(sesion);
+                    var sesionUsuarioEntities = _mapper.Map<SesionUsuarioEntities>(sesion);
+                    _usuarioDomain.GuardarSesion(sesionUsuarioEntities);
                 }
             }
             catch (Exception ex)
@@ -71,9 +77,6 @@ namespace ServicioAPISeguridad.Application.Main
         public Response<UserRegisterDto> UserRegister(UserRegisterDto pUserRegisterDto)
         {
             var response = new Response<UserRegisterDto>();
-            response.IsSuccess = true;
-            response.CodigoError = "0";
-            response.Data = null;
 
             try
             {

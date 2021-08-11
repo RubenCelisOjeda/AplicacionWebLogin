@@ -1,6 +1,6 @@
-﻿namespace ServicioAPISeguridad.Domain.Entities.Usuario
+﻿namespace ServicioAPISeguridad.Application.Dto
 {
-    public class UserResponseDto
+    public class AuthResponseDto
     {
         public int Id { get; set; }
         public string UserName { get; set; }
