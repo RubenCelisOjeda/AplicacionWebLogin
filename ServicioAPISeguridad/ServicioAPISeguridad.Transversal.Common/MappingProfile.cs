@@ -4,6 +4,7 @@ using ServicioAPISeguridad.Application.Dto.Sesion.Request;
 using ServicioAPISeguridad.Domain.Entities.Auth;
 using ServicioAPISeguridad.Domain.Entities.Auth.Response;
 using ServicioAPISeguridad.Domain.Entities.Sesion;
+using ServicioAPISeguridad.Domain.Entities.Usuario;
 
 namespace ServicioAPISeguridad.Transversal.Common
 {
@@ -15,8 +16,8 @@ namespace ServicioAPISeguridad.Transversal.Common
             CreateMap<AuthRequestDto, AuthRequestEntities>();
             CreateMap<SesionUsuarioDto, SesionUsuarioEntities>();
 
-            //Response
-            CreateMap<AuthResponseDto, AuthResponseEntities>();
+            //Response Souurce -Destino
+            CreateMap<UserResponseEntities, AuthResponseDto>();
         }
     }
 }

@@ -4,6 +4,7 @@ using ServicioAPISeguridad.Domain.Entities.Sesion;
 using ServicioAPISeguridad.Domain.Entities.Usuario;
 using ServicioAPISeguridad.Domain.Interfaces;
 using ServicioAPISeguridad.Infraestructure.Interfaces;
+using System.Threading.Tasks;
 
 namespace ServicioAPISeguridad.Domain.Main
 {
@@ -22,15 +23,16 @@ namespace ServicioAPISeguridad.Domain.Main
             _usuarioRepository.GuardarSesion(pSesionUsuario);
         }
 
-        public UserResponseEntities Login(AuthRequestEntities authRequestEntities)
+        public async Task<UserResponseEntities> Login(AuthRequestEntities authRequestEntities)
         {
-            return _usuarioRepository.Login(authRequestEntities);
+            var response = await _usuarioRepository.Login(authRequestEntities);
+            return response;
         }
 
-        public void UserRegister(UserRegisterDto pUserRegisterDto)
-        {
-            _usuarioRepository.UserRegister(pUserRegisterDto);
-        }
+        //public void UserRegister(UserRegisterDto pUserRegisterDto)
+        //{
+        //    _usuarioRepository.UserRegister(pUserRegisterDto);
+        //}
  
         public bool ValidateByUser(string pUser)
         {

@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using ServicioAPISeguridad.Application.Dto;
 using ServicioAPISeguridad.Application.Interfaces;
 using ServicioAPISeguridad.Transversal.Common;
+using System;
+using System.Threading.Tasks;
 
 namespace ServicioAPISeguridad.Services.WebAPI.Controllers
 {
@@ -10,37 +13,29 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
     public class AuthController:Controller
     {
         private readonly IUsuarioApplication _usuarioApplication;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(IUsuarioApplication usuarioApplication)
+        public AuthController(IUsuarioApplication usuarioApplication, ILogger<AuthController>  logger)
         {
             _usuarioApplication = usuarioApplication;
+            _logger = logger;
         }
 
         [HttpPost]
         [Route("login")]
-        public IActionResult Login([FromBody] AuthRequestDto pUthRequest)
+        public async Task<IActionResult> Login([FromBody] AuthRequestDto pUthRequest)
         {
-            //valida el modelo
-            if (pUthRequest == null) return BadRequest();
-
-            //valida los datos
-            if (string.IsNullOrEmpty(pUthRequest.Username) || 
-                string.IsNullOrEmpty(pUthRequest.Password))
+            try
             {
-                return Ok(new 
-                {
-                    CodigoError = Constantes.Error001,
-                    IsSuccess = false,
-                    IsWarning = true,
-                    Message = "Error: No se puede acceder al servicio de seguridad.",
-                });
+                var response = await _usuarioApplication.Login(pUthRequest);
+                _logger.LogInformation(response.Message, response);
+                return Ok(response);
             }
-
-            //valida el login
-            var response = _usuarioApplication.Login(pUthRequest.Username, pUthRequest.Password);
-
-            //crea el token
-            return Ok(response);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return BadRequest();
+            }
         }
     }
 }

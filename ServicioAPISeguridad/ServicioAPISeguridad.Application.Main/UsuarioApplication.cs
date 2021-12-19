@@ -10,6 +10,7 @@ using ServicioAPISeguridad.Domain.Entities.Usuario;
 using ServicioAPISeguridad.Domain.Interfaces;
 using ServicioAPISeguridad.Transversal.Common;
 using System;
+using System.Threading.Tasks;
 
 namespace ServicioAPISeguridad.Application.Main
 {
@@ -28,15 +29,37 @@ namespace ServicioAPISeguridad.Application.Main
             _configuration = configuration;
         }
 
-        public Response<AuthResponseDto> Login(AuthRequestDto authRequestDto)
+        public async Task<Response<AuthResponseDto>> Login(AuthRequestDto authRequestDto)
         {
             AuthRequestEntities authRequest = _mapper.Map<AuthRequestEntities>(authRequestDto);
             var response = new Response<AuthResponseDto>();
+            string todo = null;
 
             try
             {
+                if (authRequestDto == null)
+                {
+                    response.IsSuccess = false;
+                    response.IsWarning = true;
+                    response.CodigoError = "0";
+                    response.Message = "Envio de parametros inválido,intente denuevo.";
+                    return response;
+                }
+                else if (string.IsNullOrEmpty(authRequestDto.Username) ||
+                         string.IsNullOrEmpty(authRequestDto.Password))
+                {
+                    response.IsSuccess = false;
+                    response.IsWarning = true;
+                    response.CodigoError = "0";
+                    response.Message = "Envio de parametros inválido,intente denuevo.";
+                    return response;
+                }
+
                 //valida el usuario y password
-                response.Data = _mapper.Map<AuthResponseDto>(_usuarioDomain.Login(authRequest));
+                var responseData = await _usuarioDomain.Login(authRequest);
+
+                response.Data = _mapper.Map<AuthResponseDto>(responseData);
+                var ver = Convert.ToInt32(todo);
 
                 if (response.Data == null)
                 {
@@ -66,43 +89,40 @@ namespace ServicioAPISeguridad.Application.Main
             }
             catch (Exception ex)
             {
-                response.IsWarning = true;
-                response.IsSuccess = false;
-                response.Message = "Error no se pudo iniciar sesión,intente de nuevo.";
-                _logger.LogError(ex,ex.Message);
+                throw ex;
             }
             return response;
         }
 
-        public Response<UserRegisterDto> UserRegister(UserRegisterDto pUserRegisterDto)
-        {
-            var response = new Response<UserRegisterDto>();
+        //public Response<UserRegisterDto> UserRegister(UserRegisterDto pUserRegisterDto)
+        //{
+        //    var response = new Response<UserRegisterDto>();
 
-            try
-            {
-                if (pUserRegisterDto == null)
-                {
-                    response.IsSuccess = false;
-                    response.IsWarning = true;
-                    response.CodigoError = "0";
-                    response.Message = "Registro no válido,intente de nuevo.";
-                    return response;
-                }
+        //    try
+        //    {
+        //        if (pUserRegisterDto == null)
+        //        {
+        //            response.IsSuccess = false;
+        //            response.IsWarning = true;
+        //            response.CodigoError = "0";
+        //            response.Message = "Registro no válido,intente de nuevo.";
+        //            return response;
+        //        }
 
-                //valida el usuario y password
-                _usuarioDomain.UserRegister(pUserRegisterDto);
-                response.Message = "Registro con exito correctamente.";
+        //        //valida el usuario y password
+        //        _usuarioDomain.UserRegister(pUserRegisterDto);
+        //        response.Message = "Registro con exito correctamente.";
 
-            }
-            catch (Exception ex)
-            {
-                response.IsWarning = true;
-                response.IsSuccess = false;
-                response.Message = "Error";
-                _logger.LogError(ex, ex.Message);
-            }
-            return response;
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.IsWarning = true;
+        //        response.IsSuccess = false;
+        //        response.Message = "Error";
+        //        _logger.LogError(ex, ex.Message);
+        //    }
+        //    return response;
+        //}
 
         public Response<bool> ValidateByUser(string pUser)
         {

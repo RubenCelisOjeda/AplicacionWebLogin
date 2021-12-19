@@ -45,9 +45,9 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
             pUserRegister.DateCreate = DateTime.Now;
 
 
-            var response =  _usuarioApplication.UserRegister(pUserRegister);
+            //var response =  _usuarioApplication.UserRegister(pUserRegister);
 
-            return Ok(response);
+            return Ok("");
         }
 
         [HttpGet]

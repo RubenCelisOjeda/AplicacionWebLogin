@@ -5,6 +5,7 @@ using ServicioAPISeguridad.Domain.Entities.Usuario;
 using ServicioAPISeguridad.Infraestructure.Interfaces;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ServicioAPISeguridad.Infraestructure.Repository
 {
@@ -33,7 +34,7 @@ namespace ServicioAPISeguridad.Infraestructure.Repository
             }
         }
 
-        public UserResponseEntities Login(AuthRequestEntities authRequestEntities)
+        public async Task<UserResponseEntities> Login(AuthRequestEntities authRequestEntities)
         {
             using (var connection = _configuration.GetConnectionSeguridad)
             {
@@ -42,25 +43,26 @@ namespace ServicioAPISeguridad.Infraestructure.Repository
                 parameters.Add("@pEmail", authRequestEntities.Username, DbType.String);
                 parameters.Add("@pPassword", authRequestEntities.Password, DbType.String);
 
-                return connection.Query<UserResponseEntities>(procedure, parameters,commandType:CommandType.StoredProcedure).FirstOrDefault();
+                var response = await connection.QueryAsync<UserResponseEntities>(procedure, parameters, commandType: CommandType.StoredProcedure);
+                return response.FirstOrDefault();
             }
         }
 
-        public void UserRegister(UserRegisterDto pUserRegisterDto)
-        {
-            using (var connection = _configuration.GetConnectionSeguridad)
-            {
-                const string procedure = "PROC_I_Usuario";
-                var parameters = new DynamicParameters();
-                parameters.Add("@pUserName", pUserRegisterDto.UserName, DbType.String);
-                parameters.Add("@pEmail", pUserRegisterDto.Password, DbType.String);
-                parameters.Add("@pPassword", pUserRegisterDto.Email, DbType.String);
-                parameters.Add("@pDateCreate", pUserRegisterDto.DateCreate, DbType.DateTime);
-                parameters.Add("@pStatus", pUserRegisterDto.Status, DbType.Byte);
+        //public void UserRegister(UserRegisterDto pUserRegisterDto)
+        //{
+        //    using (var connection = _configuration.GetConnectionSeguridad)
+        //    {
+        //        const string procedure = "PROC_I_Usuario";
+        //        var parameters = new DynamicParameters();
+        //        parameters.Add("@pUserName", pUserRegisterDto.UserName, DbType.String);
+        //        parameters.Add("@pEmail", pUserRegisterDto.Password, DbType.String);
+        //        parameters.Add("@pPassword", pUserRegisterDto.Email, DbType.String);
+        //        parameters.Add("@pDateCreate", pUserRegisterDto.DateCreate, DbType.DateTime);
+        //        parameters.Add("@pStatus", pUserRegisterDto.Status, DbType.Byte);
 
-                connection.Execute(procedure, parameters, commandType: CommandType.StoredProcedure);
-            }
-        }
+        //        connection.Execute(procedure, parameters, commandType: CommandType.StoredProcedure);
+        //    }
+        //}
 
         public bool ValidateByUser(string pUser)
         {
