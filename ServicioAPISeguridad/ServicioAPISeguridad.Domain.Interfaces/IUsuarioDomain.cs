@@ -9,8 +9,8 @@ namespace ServicioAPISeguridad.Domain.Interfaces
     public interface IUsuarioDomain
     {
         Task<UserResponseEntities> Login(AuthRequestEntities authRequestEntities);
-        void GuardarSesion(SesionUsuarioEntities pSesionUsuario);
-        //void UserRegister(UserRegisterDto pUserRegisterDto);
+        Task<int> GuardarSesion(SesionUsuarioEntities pSesionUsuario);
+        int UserRegister(UserRegisterEntities pUserRegisterDto);
         bool ValidateByUser(string pUser);
         bool ValidateByEmail(string pEmail);
     }

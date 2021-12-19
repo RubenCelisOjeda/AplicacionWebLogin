@@ -5,8 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Usuario\Response\**" />
+    <EmbeddedResource Remove="Usuario\Response\**" />
+    <None Remove="Usuario\Response\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Sesion\Response\" />
-    <Folder Include="Usuario\Response\" />
   </ItemGroup>
 
 </Project>

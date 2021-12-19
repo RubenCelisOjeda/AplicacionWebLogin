@@ -1,4 +1,5 @@
 ﻿using ServicioAPISeguridad.Application.Dto;
+using ServicioAPISeguridad.Application.Dto.Usuario.Request;
 using ServicioAPISeguridad.Domain.Entities.Usuario;
 using ServicioAPISeguridad.Transversal.Common;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace ServicioAPISeguridad.Application.Interfaces
     {
         Task<Response<AuthResponseDto>> Login(AuthRequestDto authRequestDto);
         Response<bool> ValidateByUser(string pUser);
-        //Response<UserRegisterDto> UserRegister(UserRegisterDto pUserRegisterDto);
+        Response<int> UserRegister(UserRegisterRequestDto pUserRegisterDto);
         Response<bool> ValidateByEmail(string pEmail);
     }
 }

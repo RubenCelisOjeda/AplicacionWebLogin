@@ -18,9 +18,10 @@ namespace ServicioAPISeguridad.Domain.Main
             _usuarioRepository = usuarioRepository;
         }
 
-        public void GuardarSesion(SesionUsuarioEntities pSesionUsuario)
+        public async Task<int> GuardarSesion(SesionUsuarioEntities pSesionUsuario)
         {
-            _usuarioRepository.GuardarSesion(pSesionUsuario);
+            var response = await _usuarioRepository.GuardarSesion(pSesionUsuario);
+            return response;
         }
 
         public async Task<UserResponseEntities> Login(AuthRequestEntities authRequestEntities)
@@ -29,11 +30,11 @@ namespace ServicioAPISeguridad.Domain.Main
             return response;
         }
 
-        //public void UserRegister(UserRegisterDto pUserRegisterDto)
-        //{
-        //    _usuarioRepository.UserRegister(pUserRegisterDto);
-        //}
- 
+        public int UserRegister(UserRegisterEntities pUserRegisterEntities)
+        {
+            return _usuarioRepository.UserRegister(pUserRegisterEntities);
+        }
+
         public bool ValidateByUser(string pUser)
         {
             return _usuarioRepository.ValidateByUser(pUser);

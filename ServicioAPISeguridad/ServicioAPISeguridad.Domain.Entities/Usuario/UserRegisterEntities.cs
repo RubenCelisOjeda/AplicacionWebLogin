@@ -2,7 +2,7 @@
 
 namespace ServicioAPISeguridad.Domain.Entities.Usuario
 {
-    public class UserRegisterDto
+    public class UserRegisterEntities
     {
         public string UserName { get; set; }
         public string Email { get; set; }

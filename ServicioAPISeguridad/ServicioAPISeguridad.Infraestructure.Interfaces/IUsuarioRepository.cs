@@ -8,8 +8,8 @@ namespace ServicioAPISeguridad.Infraestructure.Interfaces
     public interface IUsuarioRepository
     {
         Task<UserResponseEntities> Login (AuthRequestEntities authRequestEntities);
-        void GuardarSesion(SesionUsuarioEntities pSesionUsuarioDto);
-        //void UserRegister(UserRegisterDto pUserRegisterDto);
+        Task<int> GuardarSesion(SesionUsuarioEntities pSesionUsuarioDto);
+        int UserRegister(UserRegisterEntities pUserRegisterDto);
         bool ValidateByUser(string pUser);
         bool ValidateByEmail(string pEmail);
     }

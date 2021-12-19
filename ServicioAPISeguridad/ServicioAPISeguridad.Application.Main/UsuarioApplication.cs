@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using ServicioAPISeguridad.Application.Dto;
 using ServicioAPISeguridad.Application.Dto.Sesion.Request;
+using ServicioAPISeguridad.Application.Dto.Usuario.Request;
 using ServicioAPISeguridad.Application.Interfaces;
 using ServicioAPISeguridad.Domain.Entities.Auth;
 using ServicioAPISeguridad.Domain.Entities.Sesion;
@@ -84,7 +85,7 @@ namespace ServicioAPISeguridad.Application.Main
                         Status = 1
                     };
                     var sesionUsuarioEntities = _mapper.Map<SesionUsuarioEntities>(sesion);
-                    _usuarioDomain.GuardarSesion(sesionUsuarioEntities);
+                    var responseSesion = await _usuarioDomain.GuardarSesion(sesionUsuarioEntities);
                 }
             }
             catch (Exception ex)
@@ -94,35 +95,37 @@ namespace ServicioAPISeguridad.Application.Main
             return response;
         }
 
-        //public Response<UserRegisterDto> UserRegister(UserRegisterDto pUserRegisterDto)
-        //{
-        //    var response = new Response<UserRegisterDto>();
+        public Response<int> UserRegister(UserRegisterRequestDto pUserRegisterDto)
+        {
+            var response = new Response<int>();
 
-        //    try
-        //    {
-        //        if (pUserRegisterDto == null)
-        //        {
-        //            response.IsSuccess = false;
-        //            response.IsWarning = true;
-        //            response.CodigoError = "0";
-        //            response.Message = "Registro no válido,intente de nuevo.";
-        //            return response;
-        //        }
+            try
+            {
+                if (pUserRegisterDto == null)
+                {
+                    response.IsSuccess = false;
+                    response.IsWarning = true;
+                    response.CodigoError = "0";
+                    response.Message = "Registro no válido,intente de nuevo.";
+                    return response;
+                }
 
-        //        //valida el usuario y password
-        //        _usuarioDomain.UserRegister(pUserRegisterDto);
-        //        response.Message = "Registro con exito correctamente.";
+                //se mapea los datos
+                var userRegisterEntities = _mapper.Map<UserRegisterEntities>(pUserRegisterDto);
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response.IsWarning = true;
-        //        response.IsSuccess = false;
-        //        response.Message = "Error";
-        //        _logger.LogError(ex, ex.Message);
-        //    }
-        //    return response;
-        //}
+                _usuarioDomain.UserRegister(userRegisterEntities);
+                response.Message = "Registro con exito correctamente.";
+
+            }
+            catch (Exception ex)
+            {
+                response.IsWarning = true;
+                response.IsSuccess = false;
+                response.Message = "Error";
+                _logger.LogError(ex, ex.Message);
+            }
+            return response;
+        }
 
         public Response<bool> ValidateByUser(string pUser)
         {

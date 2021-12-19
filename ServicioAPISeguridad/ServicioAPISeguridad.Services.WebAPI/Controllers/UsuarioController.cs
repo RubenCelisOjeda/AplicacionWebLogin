@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using ServicioAPISeguridad.Application.Dto.Usuario.Request;
 using ServicioAPISeguridad.Application.Interfaces;
-using ServicioAPISeguridad.Domain.Entities.Usuario;
 using ServicioAPISeguridad.Transversal.Common;
 using System;
 
@@ -22,7 +21,7 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
  
         [HttpPost]
         [Route("registerUser")]
-        public IActionResult RegisterUser([FromBody] UserRegisterDto pUserRegister)
+        public IActionResult RegisterUser([FromBody] UserRegisterRequestDto pUserRegister)
         {
             //valida el modelo
             if (pUserRegister == null) return BadRequest();
@@ -45,7 +44,7 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
             pUserRegister.DateCreate = DateTime.Now;
 
 
-            //var response =  _usuarioApplication.UserRegister(pUserRegister);
+            var response = _usuarioApplication.UserRegister(pUserRegister);
 
             return Ok("");
         }
