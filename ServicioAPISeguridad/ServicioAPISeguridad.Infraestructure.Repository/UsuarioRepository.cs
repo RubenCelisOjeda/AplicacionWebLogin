@@ -49,19 +49,20 @@ namespace ServicioAPISeguridad.Infraestructure.Repository
             }
         }
 
-        public int UserRegister(UserRegisterEntities pUserRegisterDto)
+        public async Task<int> UserRegister(UserRegisterEntities pUserRegisterDto)
         {
             using (var connection = _configuration.GetConnectionSeguridad)
             {
                 const string procedure = "PROC_I_Usuario";
                 var parameters = new DynamicParameters();
                 parameters.Add("@pUserName", pUserRegisterDto.UserName, DbType.String);
-                parameters.Add("@pEmail", pUserRegisterDto.Password, DbType.String);
-                parameters.Add("@pPassword", pUserRegisterDto.Email, DbType.String);
+                parameters.Add("@pEmail", pUserRegisterDto.Email, DbType.String);
+                parameters.Add("@pPassword", pUserRegisterDto.Password, DbType.String);
                 parameters.Add("@pDateCreate", pUserRegisterDto.DateCreate, DbType.DateTime);
                 parameters.Add("@pStatus", pUserRegisterDto.Status, DbType.Byte);
 
-                return connection.Execute(procedure, parameters, commandType: CommandType.StoredProcedure);
+                var response = await connection.ExecuteAsync(procedure, parameters, commandType: CommandType.StoredProcedure);
+                return response;
             }
         }
 

@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using ServicioAPISeguridad.Application.Dto;
 using ServicioAPISeguridad.Application.Interfaces;
-using ServicioAPISeguridad.Transversal.Common;
 using System;
 using System.Threading.Tasks;
 

@@ -95,7 +95,7 @@ namespace ServicioAPISeguridad.Application.Main
             return response;
         }
 
-        public Response<int> UserRegister(UserRegisterRequestDto pUserRegisterDto)
+        public async Task<Response<int>> UserRegister(UserRegisterRequestDto pUserRegisterDto)
         {
             var response = new Response<int>();
 
@@ -110,12 +110,46 @@ namespace ServicioAPISeguridad.Application.Main
                     return response;
                 }
 
+                //validar el email
+                if (this.ValidateByEmail(pUserRegisterDto.Email).Data)
+                {
+                    response.IsSuccess = false;
+                    response.IsWarning = true;
+                    response.CodigoError = "0";
+                    response.Message = "Ingrese otro email ya esta registrado.";
+                    return response;
+                }
+
+                if (this.ValidateByUser(pUserRegisterDto.UserName).Data)
+                {
+                    response.IsSuccess = false;
+                    response.IsWarning = true;
+                    response.CodigoError = "0";
+                    response.Message = "Ingrese otro usuario ya esta registrado.";
+                    return response;
+                }
+
+                //asigna datos
+                pUserRegisterDto.DateCreate = DateTime.Now;
+                pUserRegisterDto.Status = 1;
+
                 //se mapea los datos
                 var userRegisterEntities = _mapper.Map<UserRegisterEntities>(pUserRegisterDto);
 
-                _usuarioDomain.UserRegister(userRegisterEntities);
-                response.Message = "Registro con exito correctamente.";
-
+                var responseRegister = await _usuarioDomain.UserRegister(userRegisterEntities);
+                if (responseRegister == 1)
+                {
+                    response.Data = responseRegister;
+                    response.Message = Constantes.CORRECTO_ADD;
+                    return response;
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.IsWarning = true;
+                    response.CodigoError = Constantes.Error001;
+                    response.Message = Constantes.ERROR_TRANSACCION;
+                }
             }
             catch (Exception ex)
             {

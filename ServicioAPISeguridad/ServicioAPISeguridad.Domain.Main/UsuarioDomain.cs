@@ -30,9 +30,10 @@ namespace ServicioAPISeguridad.Domain.Main
             return response;
         }
 
-        public int UserRegister(UserRegisterEntities pUserRegisterEntities)
+        public async Task<int> UserRegister(UserRegisterEntities pUserRegisterEntities)
         {
-            return _usuarioRepository.UserRegister(pUserRegisterEntities);
+            var response = await _usuarioRepository.UserRegister(pUserRegisterEntities);
+            return response;
         }
 
         public bool ValidateByUser(string pUser)

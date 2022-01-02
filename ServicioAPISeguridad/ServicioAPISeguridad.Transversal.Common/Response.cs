@@ -7,7 +7,7 @@
             this.Message = "";
             this.IsSuccess = true;
             this.IsWarning = false;
-            this.CodigoError = "0";
+            this.CodigoError = Constantes.SIN_ERROR;
         }
 
         public string CodigoError { get; set; }

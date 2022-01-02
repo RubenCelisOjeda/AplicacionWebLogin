@@ -3,6 +3,7 @@ using ServicioAPISeguridad.Application.Dto.Usuario.Request;
 using ServicioAPISeguridad.Application.Interfaces;
 using ServicioAPISeguridad.Transversal.Common;
 using System;
+using System.Threading.Tasks;
 
 namespace ServicioAPISeguridad.Services.WebAPI.Controllers
 {
@@ -21,7 +22,7 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
  
         [HttpPost]
         [Route("registerUser")]
-        public IActionResult RegisterUser([FromBody] UserRegisterRequestDto pUserRegister)
+        public async Task<IActionResult> RegisterUser([FromBody] UserRegisterRequestDto pUserRegister)
         {
             //valida el modelo
             if (pUserRegister == null) return BadRequest();
@@ -40,13 +41,8 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
                 });
             }
 
-            pUserRegister.Status = 1;
-            pUserRegister.DateCreate = DateTime.Now;
-
-
-            var response = _usuarioApplication.UserRegister(pUserRegister);
-
-            return Ok("");
+            var response = await _usuarioApplication.UserRegister(pUserRegister);
+            return Ok(response);
         }
 
         [HttpGet]
@@ -69,7 +65,6 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
             }
 
             var response = _usuarioApplication.ValidateByUser(pUser);
-
             return Ok(response);
         }
 
@@ -93,7 +88,6 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
             }
 
             var response = _usuarioApplication.ValidateByEmail(pEmail);
-
             return Ok(response);
         }
     }
