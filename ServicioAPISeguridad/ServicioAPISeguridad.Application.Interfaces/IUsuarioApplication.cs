@@ -8,7 +8,7 @@ namespace ServicioAPISeguridad.Application.Interfaces
     public interface IUsuarioApplication
     {
         Task<Response<AuthResponseDto>> Login(AuthRequestDto authRequestDto);
-        Response<bool> ValidateByUser(string pUser);
+        Task<Response<bool>> ValidateByUser(string pUser);
         Task<Response<int>> UserRegister(UserRegisterRequestDto pUserRegisterDto);
         Response<bool> ValidateByEmail(string pEmail);
     }

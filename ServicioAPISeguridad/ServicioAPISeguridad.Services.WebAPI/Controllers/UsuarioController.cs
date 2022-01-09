@@ -47,7 +47,7 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
 
         [HttpGet]
         [Route("validateByUser/{pUser}")]
-        public IActionResult ValidateByUser(string pUser)
+        public async Task<IActionResult> ValidateByUser(string pUser)
         {
             //valida el modelo
             if (pUser == null) return BadRequest();
@@ -64,7 +64,7 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
                 });
             }
 
-            var response = _usuarioApplication.ValidateByUser(pUser);
+            var response = await _usuarioApplication.ValidateByUser(pUser);
             return Ok(response);
         }
 

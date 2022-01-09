@@ -66,7 +66,7 @@ namespace ServicioAPISeguridad.Infraestructure.Repository
             }
         }
 
-        public bool ValidateByUser(string pUser)
+        public async Task<bool> ValidateByUser(string pUser)
         {
             using (var connection = _configuration.GetConnectionSeguridad)
             {
@@ -76,7 +76,8 @@ namespace ServicioAPISeguridad.Infraestructure.Repository
                 var parameters = new DynamicParameters();
                 parameters.Add("@pUserName", pUser, DbType.String);
 
-                return connection.Query<bool>(query, parameters, commandType: CommandType.Text).Any();
+                var response = await connection.QueryAsync<bool>(query, parameters, commandType: CommandType.Text);
+                return response.Any();
             }
         }
 

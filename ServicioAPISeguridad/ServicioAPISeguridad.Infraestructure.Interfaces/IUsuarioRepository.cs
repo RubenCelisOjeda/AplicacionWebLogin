@@ -10,7 +10,7 @@ namespace ServicioAPISeguridad.Infraestructure.Interfaces
         Task<UserResponseEntities> Login (AuthRequestEntities authRequestEntities);
         Task<int> GuardarSesion(SesionUsuarioEntities pSesionUsuarioDto);
         Task<int> UserRegister(UserRegisterEntities pUserRegisterDto);
-        bool ValidateByUser(string pUser);
+        Task<bool> ValidateByUser(string pUser);
         bool ValidateByEmail(string pEmail);
     }
 }

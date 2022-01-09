@@ -120,7 +120,8 @@ namespace ServicioAPISeguridad.Application.Main
                     return response;
                 }
 
-                if (this.ValidateByUser(pUserRegisterDto.UserName).Data)
+                var responseUser = await this.ValidateByUser(pUserRegisterDto.UserName);
+                if (responseUser.Data)
                 {
                     response.IsSuccess = false;
                     response.IsWarning = true;
@@ -161,7 +162,7 @@ namespace ServicioAPISeguridad.Application.Main
             return response;
         }
 
-        public Response<bool> ValidateByUser(string pUser)
+        public async Task<Response<bool>> ValidateByUser(string pUser)
         {
             var response = new Response<bool>();
             response.IsWarning = false;
@@ -171,7 +172,7 @@ namespace ServicioAPISeguridad.Application.Main
 
             try
             {
-                var responseExists = _usuarioDomain.ValidateByUser(pUser);
+                var responseExists = await _usuarioDomain.ValidateByUser(pUser);
 
                 if (responseExists)
                 {
@@ -207,7 +208,6 @@ namespace ServicioAPISeguridad.Application.Main
             try
             {
                 var responseExists = _usuarioDomain.ValidateByEmail(pEmail);
-
                 if (responseExists)
                 {
                     response.IsWarning = true;
