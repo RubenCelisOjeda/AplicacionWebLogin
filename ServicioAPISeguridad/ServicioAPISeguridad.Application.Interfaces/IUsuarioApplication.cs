@@ -10,6 +10,6 @@ namespace ServicioAPISeguridad.Application.Interfaces
         Task<Response<AuthResponseDto>> Login(AuthRequestDto authRequestDto);
         Task<Response<bool>> ValidateByUser(string pUser);
         Task<Response<int>> UserRegister(UserRegisterRequestDto pUserRegisterDto);
-        Response<bool> ValidateByEmail(string pEmail);
+        Task<Response<bool>> ValidateByEmail(string pEmail);
     }
 }

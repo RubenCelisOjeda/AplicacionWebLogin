@@ -10,6 +10,7 @@ using ServicioAPISeguridad.Domain.Entities.Sesion;
 using ServicioAPISeguridad.Domain.Entities.Usuario;
 using ServicioAPISeguridad.Domain.Interfaces;
 using ServicioAPISeguridad.Transversal.Common;
+using ServicioAPISeguridad.Transversal.Common.Utils;
 using System;
 using System.Threading.Tasks;
 
@@ -101,6 +102,10 @@ namespace ServicioAPISeguridad.Application.Main
 
             try
             {
+                //asigna datos
+                pUserRegisterDto.DateCreate = DateTime.Now;
+                pUserRegisterDto.Status = 1;
+
                 if (pUserRegisterDto == null)
                 {
                     response.IsSuccess = false;
@@ -110,8 +115,8 @@ namespace ServicioAPISeguridad.Application.Main
                     return response;
                 }
 
-                //validar el email
-                if (this.ValidateByEmail(pUserRegisterDto.Email).Data)
+                var responseEmail = await this.ValidateByEmail(pUserRegisterDto.Email);
+                if (responseEmail.Data)
                 {
                     response.IsSuccess = false;
                     response.IsWarning = true;
@@ -129,10 +134,6 @@ namespace ServicioAPISeguridad.Application.Main
                     response.Message = "Ingrese otro usuario ya esta registrado.";
                     return response;
                 }
-
-                //asigna datos
-                pUserRegisterDto.DateCreate = DateTime.Now;
-                pUserRegisterDto.Status = 1;
 
                 //se mapea los datos
                 var userRegisterEntities = _mapper.Map<UserRegisterEntities>(pUserRegisterDto);
@@ -173,7 +174,6 @@ namespace ServicioAPISeguridad.Application.Main
             try
             {
                 var responseExists = await _usuarioDomain.ValidateByUser(pUser);
-
                 if (responseExists)
                 {
                     response.IsWarning = true;
@@ -197,7 +197,7 @@ namespace ServicioAPISeguridad.Application.Main
         }
 
 
-        public Response<bool> ValidateByEmail(string pEmail)
+        public async Task<Response<bool>> ValidateByEmail(string pEmail)
         {
             var response = new Response<bool>();
             response.IsWarning = false;
@@ -207,8 +207,14 @@ namespace ServicioAPISeguridad.Application.Main
 
             try
             {
-                var responseExists = _usuarioDomain.ValidateByEmail(pEmail);
-                if (responseExists)
+                var responseExists = await _usuarioDomain.ValidateByEmail(pEmail);
+                if (MetGlo.IsEmail(pEmail))
+                {
+                    response.IsWarning = false;
+                    response.Data = false;
+                    response.Message = "Email ingresado no tiene el formato correcto.";
+                }
+                else if (responseExists)
                 {
                     response.IsWarning = true;
                     response.Data = responseExists;
@@ -216,8 +222,50 @@ namespace ServicioAPISeguridad.Application.Main
                 }
                 else
                 {
+                    response.IsSuccess = false;
                     response.Data = responseExists;
-                    response.Message = "Email ingresado correctamente";
+                    response.Message = "Email ingresado no existe.";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsWarning = true;
+                response.IsSuccess = false;
+                response.Message = "Error";
+                _logger.LogError(ex, ex.Message);
+            }
+            return response;
+        }
+
+        public async Task<Response<bool>> ValidateRecoveryEmail(string pEmail)
+        {
+            var response = new Response<bool>();
+            response.IsWarning = false;
+            response.IsSuccess = true;
+            response.CodigoError = "0";
+            response.Data = false;
+
+            try
+            {
+                var responseExists = await _usuarioDomain.ValidateByEmail(pEmail);
+                if (MetGlo.IsEmail(pEmail))
+                {
+                    response.IsWarning = false;
+                    response.Data = false;
+                    response.Message = "Email ingresado no tiene el formato correcto.";
+                }
+                else if (responseExists)
+                {
+                    response.IsWarning = true;
+                    response.Data = responseExists;
+                    response.Message = "Email validado correctamente.";
+                    MetGlo.EnviarCorreo();
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.Data = responseExists;
+                    response.Message = "Email ingresado no existe.";
                 }
             }
             catch (Exception ex)

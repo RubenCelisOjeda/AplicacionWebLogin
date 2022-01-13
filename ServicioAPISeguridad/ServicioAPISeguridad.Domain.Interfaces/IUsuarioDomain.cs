@@ -11,6 +11,6 @@ namespace ServicioAPISeguridad.Domain.Interfaces
         Task<int> GuardarSesion(SesionUsuarioEntities pSesionUsuario);
         Task<int> UserRegister(UserRegisterEntities pUserRegisterDto);
         Task<bool> ValidateByUser(string pUser);
-        bool ValidateByEmail(string pEmail);
+        Task<bool> ValidateByEmail(string pEmail);
     }
 }

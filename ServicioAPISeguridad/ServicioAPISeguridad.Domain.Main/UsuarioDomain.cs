@@ -42,9 +42,10 @@ namespace ServicioAPISeguridad.Domain.Main
             return response;
         }
 
-        public bool ValidateByEmail(string pEmail)
+        public async Task<bool>ValidateByEmail(string pEmail)
         {
-            return _usuarioRepository.ValidateByEmail(pEmail);
+            var response = await _usuarioRepository.ValidateByEmail(pEmail);
+            return response;
         }
     }
 }

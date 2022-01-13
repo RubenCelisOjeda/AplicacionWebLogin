@@ -13,5 +13,10 @@
         public const string CORRECTO_ADD = "Se guardo correctamente.";
         public const string CORRECTO_UPDATE = "Se actualizo correctamente.";
         public const string ERROR_TRANSACCION = "No se puedo ejecutar la instrucción.";
+
+
+        //email
+        public const string EMAIL_SERVIDOR = "sistemas.celis@gmail.com";
+        public const string EMAIL_SERVIDOR_PASSWORD = "codigolinux89$123";
     }
 }

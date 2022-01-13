@@ -81,7 +81,7 @@ namespace ServicioAPISeguridad.Infraestructure.Repository
             }
         }
 
-        public bool ValidateByEmail(string pEmail)
+        public async Task<bool> ValidateByEmail(string pEmail)
         {
             using (var connection = _configuration.GetConnectionSeguridad)
             {
@@ -90,8 +90,9 @@ namespace ServicioAPISeguridad.Infraestructure.Repository
                                        WHERE Email = @pEmail";
                 var parameters = new DynamicParameters();
                 parameters.Add("@pEmail", pEmail, DbType.String);
-
-                return connection.Query<bool>(query, parameters, commandType: CommandType.Text).Any();
+                
+                var response = await connection.QueryAsync<bool>(query, parameters, commandType: CommandType.Text);
+                return response.Any();
             }
         }
     }

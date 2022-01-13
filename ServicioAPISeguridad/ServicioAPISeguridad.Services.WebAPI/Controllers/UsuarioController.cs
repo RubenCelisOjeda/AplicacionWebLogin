@@ -2,7 +2,6 @@
 using ServicioAPISeguridad.Application.Dto.Usuario.Request;
 using ServicioAPISeguridad.Application.Interfaces;
 using ServicioAPISeguridad.Transversal.Common;
-using System;
 using System.Threading.Tasks;
 
 namespace ServicioAPISeguridad.Services.WebAPI.Controllers
@@ -70,7 +69,7 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
 
         [HttpGet]
         [Route("validateByEmail/{pEmail}")]
-        public IActionResult ValidateByEmail(string pEmail)
+        public async Task<IActionResult> ValidateByEmail(string pEmail)
         {
             //valida el modelo
             if (pEmail == null) return BadRequest();
@@ -87,7 +86,7 @@ namespace ServicioAPISeguridad.Services.WebAPI.Controllers
                 });
             }
 
-            var response = _usuarioApplication.ValidateByEmail(pEmail);
+            var response = await _usuarioApplication.ValidateByEmail(pEmail);
             return Ok(response);
         }
     }
