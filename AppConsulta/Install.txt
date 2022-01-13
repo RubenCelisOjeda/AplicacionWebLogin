@@ -1,0 +1,17 @@
+--crear proyecto
+ng new AppConsultaMixta
+
+--añadir angular material
+ng add @angular/material
+y
+y
+
+--añadir componente
+ng generate component login
+
+--añadir services
+ng generate service 
+
+--añadir model y routing
+
+ng generate module --routing
