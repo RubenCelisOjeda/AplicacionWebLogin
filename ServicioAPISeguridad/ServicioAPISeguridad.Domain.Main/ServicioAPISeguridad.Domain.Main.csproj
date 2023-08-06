@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ServicioAPISeguridad.Application.Main\ServicioAPISeguridad.Application.Main.csproj" />
     <ProjectReference Include="..\ServicioAPISeguridad.Domain.Interfaces\ServicioAPISeguridad.Domain.Interfaces.csproj" />
     <ProjectReference Include="..\ServicioAPISeguridad.Infraestructure.Interfaces\ServicioAPISeguridad.Infraestructure.Interfaces.csproj" />
   </ItemGroup>

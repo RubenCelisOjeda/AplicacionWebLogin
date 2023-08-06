@@ -2,18 +2,22 @@
 {
     public static class Constantes
     {
-        // No se puede acceder al servicio por valifacion o falta de datos. Error no controlado.
-        public const string Error001 = "1";
-        public const string SIN_ERROR = "0";
+        //Codigos de respuesta.
+        public const string CODIGO_SUCCESS = "0";
+        public const string CODIGO_WARNING = "2";
+        public const string CODIGO_ERROR = "1";
 
-        // Error no controlado,Contraseña inválida y/o incorrecta.
-        public const string Error002 = "2";
+        //Mensajes de operacion
+        public const string MSG_OPERATION_SUCCESS = "Se ejecuto correctamente.";
+        public const string MSG_OPERATION_WARNING = "No se pudo ejecutar la operacion correctamente.";
+        public const string MSG_OPERATION_ERROR = "Error al ejecutar la operacion.";
 
-        public const string CORRECTO_SELECT = "Se consulta correctamente.";
-        public const string CORRECTO_ADD = "Se guardo correctamente.";
-        public const string CORRECTO_UPDATE = "Se actualizo correctamente.";
-        public const string ERROR_TRANSACCION = "No se puedo ejecutar la instrucción.";
+        //Mensajes de validacion
+        public const string MSG_ENTIDAD_INVALIDA = "Entidad inválida,intente denuevo.";
+        public const string MSG_PARAMETRO_INVALIDO = "Envio de parámetros inválido,intente denuevo.";
 
+        public const bool SUCCESS = true;
+        public const bool ERROR = false;
 
         //email
         public const string EMAIL_SERVIDOR = "sistemas.celis@gmail.com";

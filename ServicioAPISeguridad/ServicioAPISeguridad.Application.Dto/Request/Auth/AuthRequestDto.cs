@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ServicioAPISeguridad.Application.Dto
+﻿namespace ServicioAPISeguridad.Application.Dto
 {
     public class AuthRequestDto
     {

@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ServicioAPISeguridad.Application.Dto\ServicioAPISeguridad.Application.Dto.csproj" />
-    <ProjectReference Include="..\ServicioAPISeguridad.Application.Interfaces\ServicioAPISeguridad.Application.Interfaces.csproj" />
     <ProjectReference Include="..\ServicioAPISeguridad.Transversal.Common\ServicioAPISeguridad.Transversal.Common.csproj" />
     <ProjectReference Include="..\ServicioAPISeguridad.Transversal.IoC\ServicioAPISeguridad.Transversal.IoC.csproj" />
   </ItemGroup>

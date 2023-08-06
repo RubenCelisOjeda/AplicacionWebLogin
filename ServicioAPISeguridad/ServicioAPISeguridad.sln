@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Infraestructure", "1.Infr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Domain", "2.Domain", "{5B28EB99-C6FC-4A51-BF5A-73D8180D0F10}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Application", "3.Application", "{DFE5EFF7-0F4E-4B75-8855-0FF098F110F0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Entities", "3.Entities", "{DFE5EFF7-0F4E-4B75-8855-0FF098F110F0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Services", "4.Services", "{6C9902E1-6491-4A83-ACDA-726E631FE0D7}"
 EndProject
@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServicioAPISeguridad.Infrae
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServicioAPISeguridad.Transversal.Common", "ServicioAPISeguridad.Transversal.Common\ServicioAPISeguridad.Transversal.Common.csproj", "{D15DC4E3-880B-4775-B9B5-F0C7E9318363}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicioAPISeguridad.Transversal.IoC", "ServicioAPISeguridad.Transversal.IoC\ServicioAPISeguridad.Transversal.IoC.csproj", "{00EBFE1B-9E01-4C2C-8918-656690602CB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServicioAPISeguridad.Transversal.IoC", "ServicioAPISeguridad.Transversal.IoC\ServicioAPISeguridad.Transversal.IoC.csproj", "{00EBFE1B-9E01-4C2C-8918-656690602CB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
